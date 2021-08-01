@@ -1,0 +1,54 @@
+.h1, .h2, .h3, .h4, .h5, .h6, p{
+    margin: 0;
+}
+.text-primary{
+    color: #FFE3E3 !important;
+}
+.btn-outline-primary{
+    color: #FFE3E3;
+    border-color: #FFE3E3;
+    &:hover{
+        background: #FFE3E3;
+        color: #262A53;
+    }
+}
+.btn-primary{
+    background: #FFE3E3;
+    color: #262A53;
+    &:hover{
+        color: #FFE3E3;
+        border-color: #FFE3E3;
+        background: transparent;
+    }
+}
+body{
+    background: #262A53;
+    height: 100vh;
+}
+.list-show{
+    background: #FFA0A0;
+    color: #262A53;
+}
+.list-item{
+    i{
+        cursor: pointer;
+    }
+    
+}
+.done .name{
+    opacity: 0.6;
+    text-decoration:line-through;
+}
+.btn-primary:not(:disabled):not(.disabled).active{
+    color: #262A53;
+    background-color: #FFA0A0;
+    border-color: #FFA0A0;
+    &:hover{
+        color: #FFE3E3;
+        border-color: #FFE3E3;
+        background: transparent;
+    }
+}
+.order{
+    order: -1;
+}

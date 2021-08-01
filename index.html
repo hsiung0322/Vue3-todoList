@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todolist</title>
+    <!-- Bootstrap ICON -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/all.css">
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="header py-3 mb-4">
+                <h1 class="text-primary text-center mb-3">TodoList</h1>
+                <div class="additem d-flex justify-content-between">
+                    <input v-model="thing" @keyup.enter="addItem()" type="text" placeholder="Add Item ..." class="w-75 p-3 mr-3">
+                    <button @click="addItem()" type="button" class="btn btn-outline-primary w-25">Add Item</button>
+                </div>
+            </div>
+            <div class="status-show d-flex justify-content-between align-items-center px-3 mb-3">
+                <span class="text-light">有{{filterData.length}}筆任務</span>
+                <div class="btn-group">
+                    <button @click="isDone = '' ; isActive = 'all'" :class="{ active : isActive === 'all' }" type="button" class="btn btn-primary">ALL</button>
+                    <button @click="isDone = false ; isActive = 'progress'" :class="{ active : isActive === 'progress' }" type="button" class="btn btn-primary">IN PROGRESS</button>
+                    <button @click="isDone = true ; isActive = 'done'" type="button" :class="{ active : isActive === 'done' }" class="btn btn-primary">DONE</button>
+                </div>
+                <button @click="clearAll()" type="button" class="btn btn-danger mx-2">DELETE ALL</button>
+            </div>
+            <div class="list-show">
+                <ul class="list list-unstyled d-flex flex-column">
+                    <li v-for="item in filterData" :key="item.id" :class="[{ done : item.status },{ order : item.isOrder }]" class="list-item list-unstyled p-3 d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <i v-if="item.isOrder" @click="switchOrder(item)" class="bi bi-pin-fill px-3" style="font-size: 2rem; color: #dc3545;"></i>
+                            <i v-else @click="switchOrder(item)" class="bi bi-pin px-3" style="font-size: 2rem"></i>
+                            <span class="h3 name">{{ item.thing }}</span>
+                        </div>
+                        <div>
+                            <i v-show="!item.status" @click="editItem(item)" data-toggle="modal" :data-target="'#'+item.id" class="bi bi-pencil mx-2" style="font-size: 2rem"></i>
+                            <i v-if="item.status" @click="switchStatus(item)" class="bi bi-check-square mx-2" style="font-size: 2rem"></i>
+                            <i v-else @click="switchStatus(item)" class="bi bi-square mx-2" style="font-size: 2rem"></i>
+                            <i @click="removeItem(item)" class="bi bi-trash mx-2" style="font-size: 2rem"></i>
+                            <!-- Modal -->
+                            <div class="modal fade" :id="item.id" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">{{item.thing}}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <textarea v-model="temp.thing" class="w-100" style="height: 150px;">{{ temp.thing }}</textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button @click="doneItem(item)" data-dismiss="modal" type="button" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal end -->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script type="module" src="all.js"></script>
+</body>
+</html>
