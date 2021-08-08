@@ -63,7 +63,3 @@ body {
       -ms-flex-order: -1;
           order: -1;
 }
-
-.bi-pin-fill::before {
-  color: #dc3545;
-}
